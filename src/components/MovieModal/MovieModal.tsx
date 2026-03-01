@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-import type { Movie } from '../../types/movie';
-import css from './MovieModal.module.css';
-import { createPortal } from 'react-dom';
+import { useEffect } from "react";
+import type { Movie } from "../../types/movie";
+import css from "./MovieModal.module.css";
+import { createPortal } from "react-dom";
 interface MovieModalProps {
   movie: Movie;
   onClose: () => void;
@@ -13,45 +13,30 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
       onClose();
     }
   };
-
-  // закриття по клавіші Escape
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (event.key === "Escape") {
         onClose();
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    document.body.style.overflow = 'hidden';
+    document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = '';
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
     };
   }, [onClose]);
 
-  const imageBaseUrl = 'https://image.tmdb.org/t/p/original';
+  const imageBaseUrl = "https://image.tmdb.org/t/p/original";
   return createPortal(
-    <div
-      className={css.backdrop}
-      role="dialog"
-      aria-modal="true"
-      onClick={handleBackdropClick}
-    >
+    <div className={css.backdrop} role="dialog" aria-modal="true" onClick={handleBackdropClick}>
       <div className={css.modal}>
-        <button
-          className={css.closeButton}
-          aria-label="Close modal"
-          onClick={onClose}
-        >
+        <button className={css.closeButton} aria-label="Close modal" onClick={onClose}>
           &times;
         </button>
-        <img
-          src={imageBaseUrl + movie.backdrop_path}
-          alt={movie.title}
-          className={css.image}
-        />
+        <img src={imageBaseUrl + movie.backdrop_path} alt={movie.title} className={css.image} />
         <div className={css.content}>
           <h2>{movie.title}</h2>
           <p>{movie.overview}</p>
@@ -65,6 +50,6 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
         </div>
       </div>
     </div>,
-    document.body
+    document.body,
   );
 }
